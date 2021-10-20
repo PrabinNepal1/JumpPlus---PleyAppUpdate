@@ -1,5 +1,7 @@
+import { Slider } from "material-ui";
 import Footer from "./component/footer/Footer";
 import Header from "./component/header/header";
+import Cards from "./component/card/Cards";
 
 function App() {
   return (
@@ -8,6 +10,7 @@ function App() {
       <Header/>
 
       <h1>Pley App</h1>
+      <Cards/>
       <Footer/>
      
     </div>
