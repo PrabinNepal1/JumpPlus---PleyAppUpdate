@@ -1,11 +1,13 @@
-
+import Header from "./component/header/header";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+
+      <Header/>
+
       <h1>Pley App</h1>
-      </header>
+     
     </div>
   );
 }

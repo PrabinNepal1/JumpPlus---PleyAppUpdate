@@ -1,0 +1,20 @@
+@media only screen and (min-width: 992px) {
+    .navbar{
+        height: 80px;
+    }
+  }
+
+
+.navbar-brand{
+    margin-right: 250px;
+}
+
+
+.nav-link{
+    margin-right: 50px;
+    margin-right: 50px;
+
+    &:hover{
+        font-weight: bold;
+    }
+}
