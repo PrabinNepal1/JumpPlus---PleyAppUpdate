@@ -14,10 +14,14 @@ import Login from './component/login/login';
 import Signup from './component/signup/signup';
 import User from './component/user/user';
 import Resturant from './component/restaurant/restaurant';
+=======
+import { Slider } from "material-ui";
+import Footer from "./component/footer/Footer";
+import Header from "./component/header/header";
+import Cards from "./component/card/Cards";
 
 function App() {
   return (
-
 
     <Router>
       <AuthProvider>
@@ -35,6 +39,11 @@ function App() {
         </div>
       </AuthProvider>
     </Router>
+      <h1>Pley App</h1>
+      <Cards/>
+      <Footer/>
+     
+    </div>
   );
 }
 

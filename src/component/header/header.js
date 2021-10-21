@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import Resturant  from '../pages/resturant/Resturant';
 
 function Header(){
     return (
@@ -11,6 +12,7 @@ function Header(){
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                     <Nav.Link> <Link to="/Resturant">Restaurants</Link></Nav.Link>
+                    <Nav.Link  href="/resturant">Restaurants</Nav.Link>
                     <Nav.Link  href="#AboutUS">About Us</Nav.Link>
                     <Nav.Link  href="#ContactUS">Contact Us</Nav.Link>
                     </Nav>
