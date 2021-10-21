@@ -4,15 +4,25 @@
     }
   }
 
-
+  
 .navbar-brand{
     margin-right: 250px;
+    
+    a{
+        text-decoration: none;
+        color:inherit;
+    }
 }
 
 
 .nav-link{
     margin-right: 50px;
     margin-right: 50px;
+    
+    a{
+        text-decoration: none;
+        color:inherit;
+    }
 
     &:hover{
         font-weight: bold;
