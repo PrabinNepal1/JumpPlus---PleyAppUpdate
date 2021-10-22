@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
-import {Card, Form, Button, Container, FloatingLabel} from "react-bootstrap";
+import {Card, Form, Button, Container} from "react-bootstrap";
+import {FloatingLabel} from 'react-bootstrap/FloatingLabel';
 
 function Login(){
     return(

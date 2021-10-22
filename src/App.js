@@ -9,39 +9,42 @@ import {AuthProvider} from "./context/AuthContext";
 
 
 import Header from "./component/header/header";
-import Footer from './component/footer/footer';
+import Footer from './component/footer/Footer';
 import Login from './component/login/login';
 import Signup from './component/signup/signup';
 import User from './component/user/user';
-import Resturant from './component/restaurant/restaurant';
-=======
+import Resturant from './component/pages/resturant/Resturant';
+
 import { Slider } from "material-ui";
-import Footer from "./component/footer/Footer";
-import Header from "./component/header/header";
+
 import Cards from "./component/card/Cards";
+import CreateResturant from './component/curd/CreateResturant';
 
 function App() {
   return (
-
+    <div className="App">
     <Router>
       <AuthProvider>
-        <div className="App">
+      
 
         <Header/>
         <Route exact path='/login' component={Login}/>
         <Route exact path='/signup' component={Signup}/>
         <PrivateRoute exact path='/user' component={User}/>
         <Route exact path='/resturant' component={Resturant}/>
+        <Route exact path='/resturant/add' component={CreateResturant}/>
+        
         <Footer/>
     
     
 
-        </div>
+        
       </AuthProvider>
     </Router>
-      <h1>Pley App</h1>
-      <Cards/>
-      <Footer/>
+  
+     
+
+        <Footer/>
      
     </div>
   );
