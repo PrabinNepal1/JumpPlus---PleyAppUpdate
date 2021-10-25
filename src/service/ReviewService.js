@@ -3,17 +3,17 @@ import axios from "axios";
 
 const baseurl = "http://localhost:8080/api";
 
-class ResturantService {
+class ReviewService {
 
 
     getResturants(){
       return  axios.get(`${baseurl}/restaurants`);
     }
  
-    createResturant(resturant){
-      return  axios.post(`${baseurl}/restaurant/add`, resturant)
+    createReview(id){
+      return  axios.post(`${baseurl}/add/review/${id}`)
     }
 }
 
 
-export default new ResturantService();
+export default new ReviewService();

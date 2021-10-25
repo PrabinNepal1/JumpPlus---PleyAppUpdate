@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseurl = "http://localhost:8080";
+const baseurl = "http://localhost:8080/api";
 
 const signup = (username, password, email, displayName) => {
     return axios
@@ -14,7 +14,7 @@ const signup = (username, password, email, displayName) => {
 
 const login = (username, password) => {
     return axios
-        .post(baseurl + "/add/user", {
+        .post(baseurl + "/authenticate", {
                 username,
                 password
         })

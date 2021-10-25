@@ -1,5 +1,8 @@
 import React, {useContext, useState, useEffect} from "react";
-import {signup, login, logout, getCurrentUser} from "../service/authService";
+
+import axios from 'axios';
+
+const baseurl = "http://localhost:8080/api";
 
 
 const AuthContext = React.createContext()
@@ -9,41 +12,96 @@ export function useAuth(){
   }
 
 export function AuthProvider({children}) {
+
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
+    const [token, setToken] = useState()
+    const [userDetails, setUserDetails] =useState([])
+    
 
-async function signup(username, password, email, displayName){
-  return await signup(username, password,  email, displayName)
+async function signup(username, password, email, displayname){
+  return await axios
+          .post(baseurl + "/add/user", {
+                  username,
+                  password,
+                  email,
+                  displayname
+          });
 }
 
-async function login(email, password){
-  return await login(email, password)
+async function authenticate(username, password){
+  return await axios
+          .post(baseurl + "/authenticate", {
+                  username,
+                  password
+          })
+          .then((response) => {
+              setToken(JSON.stringify(response.data));
+              sessionStorage.setItem("user", JSON.stringify(response.data));
+              return response.data;
+          })
 }
 
 function logout(){
-   return logout()
+   sessionStorage.clear();
+}
+
+function parseJwt(token) {
+  if (!token) { return; }
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+}
+
+async function getUserData(username){
+  const config = {
+    headers: {Authorization : "Bearer" + sessionStorage.getItem("user")}
+   };
+
+   await axios.get((baseurl + "/user/username/" + username),{
+                    config
+                })
+              .then((response) => {
+                  setUserDetails(response.data);
+                })
+}
+
+async function update(username, password, email, displayname){
+  const config = {
+    headers: {
+      Authorization : "Bearer" + sessionStorage.getItem("user")}
+   };
+  return await axios
+          .patch((baseurl + "/user"), {
+            "username": username,
+            "password": password
+          },{
+            config
+        });
 }
 
 useEffect(() =>{
-    const unsubscribe = sessionStorage.getItem("user")
+    const token = sessionStorage.getItem("user");
 
-    if(sessionStorage.getItem("user") != null ){
-    setCurrentUser(sessionStorage.getItem("user"))
-    }
+    if(token != null ){
+        setCurrentUser(parseJwt(token));
+      }
     else{
-    setCurrentUser(null);
+      setCurrentUser(null);
     }
     setLoading(false)
-    
-    return [unsubscribe]
 
   },[])
 
   const value = {
     currentUser,
-    login,
+    authenticate,
+    token,
     signup,
-    logout
+    logout,
+    update,
+    getUserData,
+    userDetails
   }
 
   return (
@@ -52,6 +110,3 @@ useEffect(() =>{
     </AuthContext.Provider>
   )
 }
-
-
-
