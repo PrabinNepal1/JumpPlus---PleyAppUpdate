@@ -14,39 +14,33 @@ import Login from './component/login/login';
 import Signup from './component/signup/signup';
 import User from './component/user/user';
 import Resturant from './component/pages/resturant/Resturant';
-
-import { Slider } from "material-ui";
-
-import Cards from "./component/card/Cards";
 import CreateResturant from './component/curd/CreateResturant';
+import CreateReview from './component/curd/CreateReview';
 
 function App() {
   return (
-    <div className="App">
+
+<AuthProvider>
     <Router>
-      <AuthProvider>
+      
+        <Switch>
+          <div className="App">
+
+          <Header/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/signup' component={Signup}/>
+          <PrivateRoute exact path='/user' component={User}/>
+          <Route exact path='/resturant' component={Resturant}/>
+          <Route exact path='/resturant/add' component={CreateResturant}/>
+          <Route exact path='/add/review/' component={CreateReview}/>
+          <Footer/>
+      
       
 
-        <Header/>
-        <Route exact path='/login' component={Login}/>
-        <Route exact path='/signup' component={Signup}/>
-        <PrivateRoute exact path='/user' component={User}/>
-        <Route exact path='/resturant' component={Resturant}/>
-        <Route exact path='/resturant/add' component={CreateResturant}/>
-        
-        <Footer/>
-    
-    
-
-        
-      </AuthProvider>
+          </div>
+        </Switch>
     </Router>
-  
-     
-
-        <Footer/>
-     
-    </div>
+  </AuthProvider>
   );
 }
 

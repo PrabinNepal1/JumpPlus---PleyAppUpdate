@@ -4,6 +4,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import ResturantService from '../../../service/ResturantService';
+import ReviewService from '../../../service/ReviewService';
+import { generatePath } from 'react-router';
 
 class Resturant extends React.Component
 {
@@ -14,6 +16,7 @@ class Resturant extends React.Component
         resturants:[]
       }
       this.addResturant = this.addResturant.bind(this);
+      this.addReview = this.addReview.bind(this);
 
 
     }
@@ -24,9 +27,21 @@ class Resturant extends React.Component
         this.setState({ resturants: res.data});
       })
     }
+    componentDidUpdate(){
+      ReviewService.getResturants().then((res) => {
+      this.setState({ resturants: res.data});
+      })
+    }
     addResturant(){
       this.props.history.push('/resturant/add');
     }
+    addReview(id){
+      
+        this.props.history.push('/add/review');
+  
+
+    }
+
 
 
   render (){
@@ -45,8 +60,9 @@ class Resturant extends React.Component
                   <td>Resturant Id</td>
                   <td>Resturant Name</td>
                   <td>Resturant Address</td>
+
                   <td>Resturant Description</td>
-                  <td>Resturant Reviews</td>
+                  <td>Resturant Reviews </td>
 
                 </tr>
 
@@ -61,7 +77,7 @@ class Resturant extends React.Component
                          <td>{resturants.name}</td> 
                          <td>{resturants.address}</td> 
                          <td>{resturants.description}</td> 
-                         <td>{resturants.reviews}</td>  
+                         <td>{resturants.reviews.map}<button className="btn btn-primary" onClick= {() => this.addReview(resturants.id)}> Add Review</button></td>  
 
                       </tr>
                     )
