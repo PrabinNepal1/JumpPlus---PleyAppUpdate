@@ -1,7 +1,9 @@
 import React, {useState, useEffect } from "react";
-import {Card, Button, Container} from "react-bootstrap";
+import {Card, Button, Container, Alert} from "react-bootstrap";
 import {useAuth} from "../../context/AuthContext";
 import UpdateUserModal from "./userUpdateModal";
+
+import ReviewService from '../../service/ReviewService';
 
 function User(){
 
@@ -9,14 +11,27 @@ function User(){
     const [loading, setLoading] = useState(true)
     const [toggleModal, setToggleModal] = useState(false)
     const closeModal = () => setToggleModal(false)
+    const [reviews, setReviews] = useState([]);
+    const [message, setMessage] = useState();
+
+    function handleRemoveReview(reviewId){
+      ReviewService.removeReview(reviewId).then((res) =>{
+        if(res.status === 200){
+          setMessage("Review has been removed!")
+        }
+      });
+    }
 
     useEffect(()=>{
       getUserData(currentUser.sub);
+      ReviewService.getReviewsByUser().then((res) => 
+            setReviews(res.data));
       setLoading(false);
     },[])
 
     return(
         <Container className="d -flex align-items-left justify-our-content mt-5">
+        
         {loading && <p>loading...</p>}
         {userDetails &&
           <><Card className="w-50">
@@ -37,6 +52,24 @@ function User(){
             </>
           }
           < UpdateUserModal showUpdate={toggleModal} closeModal={closeModal}/>
+
+          {reviews && (
+               <div className="Review-List"> <h3>Your Reviews</h3>
+               {message && <Alert variant="primary">{message}</Alert>}
+               {reviews.map(
+                 (review , id) => (
+                  <Card className="w-50 mx-2 mt-2 Review-Tiles" key={id}>
+                      <div className="Review-Details">
+                        <div className="Review-Rating">Rating: {review.rating}</div>
+                        <div className="Review-Description">{review.description}</div> 
+                        <div className="Review-Description">{review.restaurantId}</div> 
+                        <Button variant="danger mx-1 mb-2" onClick={() => handleRemoveReview(review.id)}><i className="fas fa-key"></i> Remove</Button>
+                      </div>
+
+                  </Card>
+                 ) 
+                )}
+           </div> )}
           </Container>
     )
 }
